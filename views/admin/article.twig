@@ -21,10 +21,10 @@
 		<textarea name="body" id="body"></textarea>
 		
 		<div>Tags</div>
-		<!-- To be commented????????????????????????????????? -->
+		<!-- Displays a checkbox for each tag created -->
 		{% for tag in tags %}
 		<div>
-			<input type="checkbox" name="tag" value="true" id="{{tag.tagName}}"/>
+			<input type="checkbox" name="tagsSelected[]" value="{{tag.tagName}}" />
 			<label for="{{tag.tagName}}">{{tag.tagName}}</label>
 		</div>
 		{% endfor %}
