@@ -22,7 +22,7 @@ class User
 		// The value of the key :id corresponds to :id in the SQL request
 		$statement->execute(array(':login' => $login));
 
-		// Retrieving results
+		// Fetching results
 		$all = $statement->fetch();
 		/*var_dump($all);*/
 		return $all;
