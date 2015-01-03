@@ -16,27 +16,20 @@ class AdminController extends Controller
 		return $app['twig']->render('admin/dashboard.twig', $this->datas);
 	}
 
-	/**
-	 * [getAdminArticle description]
-	 * 
-	 * @param  Request     $request [description]
-	 * @param  Application $app     [description]
-	 * @return [type]               [description]
-	 */
 	public function getAdminArticle(Request $request, Application $app)
 	{
-		// J'initialise le tableau datas avec les données de l'utilisateur connecté.
+		// Initialising the table named datas (contains infos on the logged in user)
 		$this->initAction($app);
 
-		// J'initialise le model Tag.
+		// Initialising the Tag model
 		$tag = new Tag();
 
-		//Je mets dans datas['tags'] tous mes tags.
+		// Inserting in datas['tags'] all my tags
 		$this->datas['tags'] = $tag->getAll();
 
 		/*var_dump($this->datas);die();*/
 
-		// J'appelle Twig pour qu'il me génère le rendu HTML de la page Admin Article.
+		// Calling Twig to render HTML of Admin Article page
 		return $app['twig']->render('admin/article.twig', $this->datas);
 	}
 
@@ -51,7 +44,7 @@ class AdminController extends Controller
 		var_dump($body); die();*/
 
 		if (!empty($title) && !empty($body)) {
-			// Ajout d'un article dans la BDD
+			// Adding an article in DB
 			$article = new Article();
 			$nb = $article->add($title, $body);
 
@@ -107,7 +100,7 @@ class AdminController extends Controller
 			)
 		);
 
-		// S'il y a des erreurs, afficher les msgs ci-dessous
+		// If errors, show the following msgs
 		if (count($errorsEmail) > 0 || count($errorsPassword) > 0) {
 			foreach ($errorsEmail as $error) {
 				$app['session']->getFlashBag()->add('errorsEmail', $error->getMessage());
@@ -119,15 +112,15 @@ class AdminController extends Controller
 			return $this->redirect($app, 'getAdminUser');
 		}
 
-		// Je chope la value de la checkbox
-		// ? = si elle existe, alors
-		// true, sinon false
+		// Fetching value entered in checkbox
+		// ? = if exist, then
+		// true, otherwise false
 		$admin = $request->request->get('createAdmin') ? true : false;
 		/*var_dump($admin); die();*/
 
 		$hash = password_hash($password, PASSWORD_BCRYPT); // https://github.com/ircmaxell/password_compat#usage // http://php.net/manual/fr/password.constants.php
 
-		// Ajout d'un user dans la BDD
+		// Adding a user in DB
 		$user = new User();
 		
 		try {
@@ -148,7 +141,7 @@ class AdminController extends Controller
 	}
 
 	/**
-	 * Génère et affiche la page Tag.
+	 * Render Tag page.
 	 * 
 	 * @param  Request     $request
 	 * @param  Application $app
@@ -156,15 +149,15 @@ class AdminController extends Controller
 	 */
 	public function getAdminTag(Request $request, Application $app)
 	{
-		// J'initialise le tableau datas avec les données de l'utilisateur connecté.
+		// Initialising the table named datas (contains infos on the logged in user)
 		$this->initAction($app);
 
-		// J'appelle Twig pour qu'il me génère le rendu HTML de la page Tag.
+		// Calling Twig to render HTML of Tag page
 		return $app['twig']->render('admin/tag.twig', $this->datas);
 	}
 
 	/**
-	 * Création d'un nouveau tag.
+	 * Create a new tag.
 	 * 
 	 * @param  Request     $request 
 	 * @param  Application $app     
@@ -174,23 +167,23 @@ class AdminController extends Controller
 	{
 		$this->initAction($app);
 
-		// Je récupère la valeur postée dans le champ input avec l'id='tag'.
+		// Fetching value entered in input field marked with the id='tag'
 		$newTag = $request->request->get('tag');
 		/*var_dump($newTag); die();*/
 
-		// Si $newTag n'est pas vide, alors...
+		// If $newTag not null, then...
 		if (!empty($newTag)) {
 
-			// ...j'instancie la classe Tag.
+			// ...instantiate the Tag class
 			$tag = new Tag();
 
-			// ...j'ajoute le nouveau tag dans la BDD en appelant la méthode add de la classe Tag
-			// et je stocke dans $nb le nombre de lignes affectées dans la table SQL.
+			// ...add the new tag in the DB by calling the add method from the Tag class
+			// and store in $nb the number of lines affected in the SQL table
 			$nb = $tag->add($newTag);
 
-			// Si $nb n'est pas vide, alors la valeur a bien été insérée dans la table et j'affiche le flashbag de succès.
-			// Sinon, aucune ligne n'a été affectée dans la table SQL, donc la valeur n'a pas été insérée dans la table
-			// et j'affiche le flashbag d'échec.
+			// If $nb isn't null, then the value has been inserted in the table and I display the success flashbag
+			// Otherwise, no lines has been affected in the SQL table, so the value has not been inserted in the table
+			// and I display the error flashbag.
 			if ($nb) {
 				$app['session']->getFlashBag()->add('success', 'New tag added');
 			}
@@ -199,12 +192,12 @@ class AdminController extends Controller
 			}
 		}
 
-		// Sinon, j'affiche le flashbag d'échec correspondant.
+		// Otherwise, display the corresponding fail flashbag
 		else {
 			$app['session']->getFlashBag()->add('error', 'No tag to add :(');
 		}
 
-		// Je fais une redirection vers la route getAdminTag.
+		// Redirecting towards the getAminTag route
 		return $this->redirect($app, 'getAdminTag');
 	}
 
