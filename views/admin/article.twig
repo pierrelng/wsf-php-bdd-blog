@@ -24,7 +24,7 @@
 		<!-- Displays a checkbox for each tag created -->
 		{% for tag in tags %}
 		<div>
-			<input type="checkbox" name="tagsSelected[]" value="{{tag.tagName}}" id="{{tag.tagName}}"/>
+			<input type="checkbox" name="tagsSelected[]" value="{{tag.tagId}}" id="{{tag.tagName}}"/> <!-- http://stackoverflow.com/questions/24701535/retrieve-the-value-of-selected-check-boxes-in-symfony2 -->
 			<label for="{{tag.tagName}}">{{tag.tagName}}</label>
 		</div>
 		{% endfor %}

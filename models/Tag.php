@@ -41,7 +41,7 @@ class Tag
 		$sql = Sql::getInstance();
 
 		// Request creation
-		$sqlQuery = 'SELECT t.name as tagName
+		$sqlQuery = 'SELECT t.name as tagName, t.id as tagId
 					 FROM tag t';
 
 		// Preparating the request, pdo returns an object PDOStatement
