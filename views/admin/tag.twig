@@ -12,7 +12,7 @@
 		<p>{{ error }}</p>
 	{% endfor %}
 	
-	<!-- Formulaire pour créer un tag qui appellera la route postAdminTag -->
+	<!-- Tag creation form that will call the route postAdminTag -->
 	<form action="{{ path('postAdminTag') }}" method="post">
 		<label for="tag">Create a new tag</label>
 		<input type="text" name="tag" id="tag" />
