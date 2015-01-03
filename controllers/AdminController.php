@@ -39,9 +39,12 @@ class AdminController extends Controller
 
 		$title = $request->request->get('title');
 		$body = $request->request->get('body');
+		$tag = $request->request->get('tagsSelected');
 
 		/*var_dump($title);
-		var_dump($body); die();*/
+		var_dump($body);
+		var_dump($tag);
+		die();*/
 
 		if (!empty($title) && !empty($body)) {
 			// Adding an article in DB
