@@ -5,24 +5,24 @@ class User
 {
 	public function getByLogin($login)
 	{
-		// Je récupère mon instance singleton de la class Sql
+		// Getting singleton instance from the SQL class
 		$sql = Sql::getInstance();
 
-		// Création de la requête
-		// Les paramètres de la requête sont sous la forme :variable
-		// et seront initialisés dans la méthode execute();
+		// Request creation.
+		// The parameters are written under this form ':variable'
+		// and will be initialised in the execute(); method
 		$sqlQuery = 'SELECT * FROM user WHERE user.login = :login';
 
-		// Préparation de la requête, pdo renvoi un objet PDOStatement
-		// qui exécutera la requête et contiendra les résultats
+		// Preparating the request, pdo returns an object PDOStatement
+		// which will execute the request and contain the results
 		$statement = $sql->pdo->prepare($sqlQuery);
 
-		// Exécution de la requête sur le serveur mysql
-		// Initialisation des paramètres de la requête
-		// La valeur de la clé :id correspond au :id dans la requête sql
+		// Executing request on the mySQL server
+		// Initialising request parameters
+		// The value of the key :id corresponds to :id in the SQL request
 		$statement->execute(array(':login' => $login));
 
-		// Récupération des résultats
+		// Retrieving results
 		$all = $statement->fetch();
 		/*var_dump($all);*/
 		return $all;
@@ -30,28 +30,28 @@ class User
 
 	public function add($email, $password, $admin)
 	{
-		// Si getByLogin renvoie qqchose c'est que l'email existe déjà
-		// Du coup je crée une exception qui sera catchée dans AdminController
+		// If getByLogin returns something, the email already exists
+		// So I create an exception that will be catched in AdminController
 		if ($this->getByLogin($email)) {
 			throw new \Exception('Email already exist.');
 		}
 
-		// Je récupère mon instance singleton de la class Sql
+		// Getting singleton instance from the SQL class
 		$sql = Sql::getInstance();
 
-		// Création de la requête
-		// Les paramètres de la requête sont sous la forme :variable
-		// et seront initialisés dans la méthode execute();
+		// Request creation.
+		// The parameters are written under this form ':variable'
+		// and will be initialised in the execute(); method
 		$sqlQuery = 'INSERT INTO user(login, password, admin)
 					 VALUES (:login, :password, :admin)';
 
-		// Préparation de la requête, pdo renvoi un objet PDOStatement
-		// qui exécutera la requête et contiendra les résultats
+		// Preparating the request, pdo returns an object PDOStatement
+		// which will execute the request and contain the results
 		$statement = $sql->pdo->prepare($sqlQuery);
 
-		// Exécution de la requête sur le serveur mysql
-		// Initialisation des paramètres de la requête
-		// La valeur de la clé :id correspond au :id dans la requête sql
+		// Executing request on the mySQL server
+		// Initialising request parameters
+		// The value of the key :id corresponds to :id in the SQL request
 		$statement->execute(array(
 			':login' => $email,
 			':password' => $password,
