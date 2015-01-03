@@ -5,40 +5,38 @@ class Controller
 {
 
 	/**
-	 * Les données qui seront envoyés à la vue
+	 * Datas that will be sent to the view
 	 * 
 	 * @var array
 	 */
 	protected $datas = array();
 
 	/**
-	 * Initialise le tableau datas avec les données de 
-	 * l'utilisateur connecté.
+	 * Initialising the table named datas with the infos on the logged in user
 	 * 
 	 * @param  Silex\Application $app
 	 */
 	public function initAction($app)
 	{        
-		//Recupère la variable user dans la session
+		// Fetching user variable in the session
 		$user = $app['session']->get('user');
 
-		//Si user n'est pas vide
+		// If user is not empty
 		if (!empty($user)) {
 
-			//Je met user dans le tableau datas
+			// Inserting user the table named datas
 			$this->datas['user'] = $user;
 
-			//Je definis la valeur idAdmin en fonction 
-			//du status admin de l'user
+			// Defining idAdmin's value according to the user status (is he admin or not ?)
 			$this->datas['isAdmin'] = $user['admin'];
 		}  
 	}
 
 	/**
-	 * Renvoi une redirection
+	 * Return a redirection.
 	 * 
-	 * @param  Silex\Application $app   
-	 * @param  string $route Route de destination
+	 * @param  Silex\Application  $app
+	 * @param  string             $route  Route targeted
 	 * @return Redirect
 	 */
 	public function redirect($app, $route, $options = array()) // = array() veut dire que si je ne passe pas de var en options, il créera quand même un tableau par défaut pour éviter de planter par ce que $options expects un tableau
