@@ -8,51 +8,51 @@ class UserController extends Controller
 {
 	public function postLogin(Request $request, Application $app)
 	{
-		//Récupérer les valeurs postés par les champs input
+		// Fetching values entered in input fields
 		$login = $request->request->get('login');
 		$password = $request->request->get('password');
 
-		//Si $login n'est pas vide
+		// If $login is not empty
 		if (!empty($login)) {
-			//J'instancie le model User
+			// Instantiate User model
 			$user = new User();
 
-			//Je recupère l'utilisateur qui correspond au login
+			// Fetch user matching the login entered
 			$myUser = $user->getByLogin($login);
 
 			/*var_dump($myUser); die();*/
 
-			//Si $myUser n'est pas vide
+			// If $myUser is not empty
 			if (!empty($myUser)) {
-				//Si le password de l'user est égale au password du formulaire
+				// If user password matches the password entered in the form
 				if (password_verify($password, $myUser['password'])) { // https://github.com/ircmaxell/password_compat#usage
 
-					//On enregistre l'user dans la session
+					// Register user in the session
 					$app['session']->set('user', array(
 						'username' => $login,
 						'id' => $myUser['id'],
 						'admin' => $myUser['admin']
 					));
 
-					//on redirige vers la home
+					// Redirect towards home
 					return $this->redirect($app, 'home');
 				}
 			}
 		}
 
-		//Ajoute un message temporaire (flash) dans la session
+		// Add a temporary message (flash) in the session
 		$app['session']->getFlashBag()->add('loginError', 'Votre identifiant ou votre mot de passe est incorrect');
 
-		//On redirige vers la home sans modifier la session
+		// Redirect towards home without modifying the session
 		return $this->redirect($app, 'home');
 	}
 
 	public function getLogout(Request $request, Application $app)
 	{
-		//On efface l'user de la session
+		// Erase user from the session
 		$app['session']->set('user', null);
 
-		//Redirection home
+		// Redirect towards home
 		return $this->redirect($app, 'home');
 	}
 }
