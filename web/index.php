@@ -21,7 +21,7 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 // Session service configuration
 $app->register(new Silex\Provider\SessionServiceProvider());
 
-// Validator service
+// Validator service configuration
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 
 
