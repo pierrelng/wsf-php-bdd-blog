@@ -4,15 +4,16 @@ namespace MVC;
 class Article 
 {
 	/**
-	 * Renvoi tous mes articles
+	 * Return all articles.
+	 * 
 	 * @return array
 	 */
 	public function getAll()
 	{
-		// Je récupère mon instance singleton de la class Sql
+		// Getting singleton instance from the SQL class
 		$sql = Sql::getInstance();
 
-		// Création de la requête
+		// Request creation
 		$sqlQuery = 'SELECT
 						a.id,
 						a.title,
@@ -24,14 +25,14 @@ class Article
 					 LEFT JOIN tag t
 					 	ON t.id = at.id_tag'; // http://php.net/manual/fr/pdo.prepare.php#refsect1-pdo.prepare-examples
 
-		// Préparation de la requête, pdo renvoi un objet PDOStatement
-		// qui exécutera la requête et contiendra les résultats
+		// Preparating the request, pdo returns an object PDOStatement
+		// which will execute the request and contain the results
 		$statement = $sql->pdo->prepare($sqlQuery);
 
-		// Exécution de la requête sur le serveur mysql
+		// Executing request on the mySQL server
 		$statement->execute();
 
-		// Récupération des résultats
+		// Fetching results
 		/*var_dump($statement->fetchAll());die();*/
 		$datas = $statement->fetchAll();
 		
@@ -57,53 +58,41 @@ class Article
 	}
 
 	/**
-	 * Renvoi un article
-	 * @param  integer $id  identifiant de l'article
+	 * Return an article.
+	 * 
+	 * @param  integer  $id  id of article
 	 * @return array
 	 */
 	public function get($id)
 	{
-		// Je récupère mon instance singleton de la class Sql
 		$sql = Sql::getInstance();
 
-		// Création de la requête
-		// Les paramètres de la requête sont sous la forme :variable
-		// et seront initialisés dans la méthode execute();
 		$sqlQuery = 'SELECT * FROM article WHERE article.id = :id';
 
-		// Préparation de la requête, pdo renvoi un objet PDOStatement
-		// qui exécutera la requête et contiendra les résultats
 		$statement = $sql->pdo->prepare($sqlQuery);
 
-		// Exécution de la requête sur le serveur mysql
-		// Initialisation des paramètres de la requête
-		// La valeur de la clé :id correspond au :id dans la requête sql
 		$statement->execute(array(':id' => $id));
 
-		// Récupération des résultats
 		$all = $statement->fetch();
 		/*var_dump($all);*/
 		return $all;
 	}
 
+	/**
+	 * Add an article in DB.
+	 * 
+	 * @param text  $title  article title
+	 * @param text  $body  article body
+	 */
 	public function add($title, $body)
 	{
-		// Je récupère mon instance singleton de la class Sql
 		$sql = Sql::getInstance();
 
-		// Création de la requête
-		// Les paramètres de la requête sont sous la forme :variable
-		// et seront initialisés dans la méthode execute();
 		$sqlQuery = 'INSERT INTO article(title, body)
 					 VALUES (:title, :body)';
 
-		// Préparation de la requête, pdo renvoi un objet PDOStatement
-		// qui exécutera la requête et contiendra les résultats
 		$statement = $sql->pdo->prepare($sqlQuery);
 
-		// Exécution de la requête sur le serveur mysql
-		// Initialisation des paramètres de la requête
-		// La valeur de la clé :id correspond au :id dans la requête sql
 		$statement->execute(array(
 			':title' => $title,
 			':body' => $body
