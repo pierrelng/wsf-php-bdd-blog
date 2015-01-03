@@ -1,0 +1,48 @@
+{% extends "layout/default.twig" %}
+
+{% block title %}Article{% endblock %}
+
+{% block content %}
+	<article>
+		<h2 class="article">{{article.title|e}}</h2>
+		<p>{{article.body|e}}</p>
+		
+		<section>
+			<h2>Commentaires :</h2>
+			
+			{% for comment in comments %}
+    		<article>
+		        <h3 class="commentor">{{comment.login|e}}</h3>
+
+		        <p class="commentor">
+		        	{{comment.create_at|date("d F Y à H:i")}} {# http://twig.sensiolabs.org/doc/filters/date.html#date #}
+					{% if isAdmin is defined and isAdmin %}
+						<a href="{{ path('getDeleteComment', {idCommentFetchedFromRoute: comment.id}) }}">Delete</a>
+					{% endif %}
+		        </p>
+
+		        <p class="comment">{{comment.body|e}}</p>
+		    </article>  
+		    {% endfor %}
+			
+			{% if user is defined %}
+
+				{% for message in app.session.flashbag.get('success') %}
+					<p>{{ message }}</p>
+				{% endfor %}
+				{% for error in app.session.flashbag.get('error') %}
+					<p>{{ error }}</p>
+				{% endfor %}
+				
+				<form action="{{ path('postComment', {idArticleFetchedFromRoute: article.id}) }}" method="post">
+					<label for="comment">Poster votre commentaire</label>
+					<textarea name="comment" id="comment"></textarea>
+				
+					<input type="submit" value="Poster" />
+				</form>
+
+			{% endif %}
+
+		</section>
+	</article>  
+{% endblock %}

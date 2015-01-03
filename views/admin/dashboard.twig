@@ -1,0 +1,25 @@
+{% extends "layout/default.twig" %}
+
+{% block title %}Admin - Dashboard{% endblock %}
+
+{% block content %}
+	<h1>Admin - Dashboard</h1>
+
+	<nav>
+		<h2>Menu</h2>
+		<ul>
+			<li>
+				<a href="{{ path('getAdminArticle') }}">Article</a>
+			</li>
+			<li>
+				<a href="{{ path('getAdminUser') }}">User</a>
+			</li>
+
+			<!-- Je crée le lien qui appellera la route correspondante à l'affichage de la page Tag. -->
+			<li>
+				<a href="{{ path('getAdminTag') }}">Tag</a>
+			</li>
+
+		</ul>
+	</nav>
+{% endblock %}

@@ -1,0 +1,54 @@
+input:not([type="checkbox"]):not(.loginButton), textarea {
+	display: block;
+	margin-bottom: 10px;
+}
+
+body {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1.5%;
+	width: 15em;
+	border: solid;
+	padding: 0em 1em 1em 1em;
+	font-family: 'Lato', sans-serif;
+}
+
+h1 {
+	margin-top: .5em;
+}
+
+.separator {
+	margin-top: 2em;
+	height: 3px;
+	border-bottom-style: dashed;
+}
+
+.welcome {
+	margin-bottom: .2em;
+}
+
+.nav {
+	margin-right: 0.2em;
+}
+
+input[type="submit"]:not(.loginButton) {
+	margin-top: 10px
+}
+
+.signIn {
+	margin-top: 13px;
+}
+
+.article {
+	font-size: 2em;
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+.commentor {
+	margin: .2em 0 .2em 0;
+}
+
+.comment {
+	margin: .5em 0 1em 0;
+}

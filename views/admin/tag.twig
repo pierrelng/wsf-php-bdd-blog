@@ -1,0 +1,23 @@
+{% extends "layout/default.twig" %}
+
+{% block title %}Admin - Tag{% endblock %}
+
+{% block content %}
+	<h1>Admin - Tag</h1>
+
+	{% for message in app.session.flashbag.get('success') %}
+		<p>{{ message }}</p>
+	{% endfor %}
+	{% for error in app.session.flashbag.get('error') %}
+		<p>{{ error }}</p>
+	{% endfor %}
+	
+	<!-- Formulaire pour créer un tag qui appellera la route postAdminTag -->
+	<form action="{{ path('postAdminTag') }}" method="post">
+		<label for="tag">Create a new tag</label>
+		<input type="text" name="tag" id="tag" />
+
+		<input type="submit" value="Create" />
+	</form>
+
+{% endblock %}

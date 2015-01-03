@@ -1,0 +1,34 @@
+{% extends "layout/default.twig" %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+	
+	<h1>Homepage</h1>
+
+	{% for id, article in articles %}
+	<article>
+		<h2>
+			<a href="{{ path('getArticle', {id: article.id}) }}" >{{article.title|e}}</a>
+		</h2>
+		<p>{{article.body|e}}</p>
+
+		<ul>
+			{% for tag in article.tags %}
+				{% if tag %}
+					<li>{{tag}}</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+	</article>
+	{% endfor %}
+
+{% endblock %}
+
+{% block javascript %}
+	{{parent()}}
+	<script type="text/javascript">
+	var monjs;
+	</script>
+{% endblock %}
+ 

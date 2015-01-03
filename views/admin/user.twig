@@ -1,0 +1,40 @@
+{% extends "layout/default.twig" %}
+
+{% block title %}Admin - User{% endblock %}
+
+{% block content %}
+	<h1>Admin - User</h1>
+
+	{% for message in app.session.flashbag.get('success') %}
+		<p>{{ message }}</p>
+	{% endfor %}
+	{% for error in app.session.flashbag.get('error') %}
+		<p>{{ error }}</p>
+	{% endfor %}
+
+
+	<form action="{{ path('postAdminUser') }}" method="post">
+		{% for error in app.session.flashbag.get('errorsEmail') %}
+			<p>{{ error }}</p>
+		{% endfor %}
+		<label for="email">Email</label>
+		<input type="text" name="email" id="email" />
+
+		<label for="confirm_email">Confirmer l'email</label>
+		<input type="text" name="confirm_email" id="confirm_email" />
+
+		{% for error in app.session.flashbag.get('errorsPassword') %}
+			<p>{{ error }}</p>
+		{% endfor %}
+		<label for="password">Password</label>
+		<input type="password" name="password" id="password" />
+
+		<label for="confirm_password">Confirmer le password</label>
+		<input type="password" name="confirm_password" id="confirm_password" />
+
+		<input type="checkbox" name="createAdmin" value="true" id="createAdmin"/>
+		<label for="createAdmin">is Admin ?</label>
+
+		<input type="submit" value="Créer" />
+	</form>
+{% endblock %}

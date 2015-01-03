@@ -1,0 +1,35 @@
+{% extends "layout/default.twig" %}
+
+{% block title %}Admin - Article{% endblock %}
+
+{% block content %}
+	<h1>Admin - Article</h1>
+
+	{% for message in app.session.flashbag.get('success') %}
+		<p>{{ message }}</p>
+	{% endfor %}
+	{% for error in app.session.flashbag.get('error') %}
+		<p>{{ error }}</p>
+	{% endfor %}
+	
+	<form action="{{ path('postAdminArticle') }}" method="post">
+
+		<label for="title">Title</label>
+		<input type="text" name="title" id="title" />
+
+		<label for="body">Corps de l'article</label>
+		<textarea name="body" id="body"></textarea>
+		
+		<div>Tags</div>
+		<!-- A commenter????????????????????????????????? -->
+		{% for tag in tags %}
+		<div>
+			<input type="checkbox" name="tag" value="true" id="{{tag.tagName}}"/>
+			<label for="{{tag.tagName}}">{{tag.tagName}}</label>
+		</div>
+		{% endfor %}
+
+		<input type="submit" value="Créer" />
+
+	</form>
+{% endblock %}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Blog - {% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/styles/main.css" />
+	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+	<div class="main">{% block content %}{% endblock %}</div>
+
+	<div class="separator"></div>
+
+	<aside>
+		{% if user is defined %}
+			<p class="welcome">Welcome {{ user.username }}</p>
+			<a href="{{ path('home') }}" class="nav">Home<a/>
+
+			{% if isAdmin is defined and isAdmin %}
+			<a href="{{ path('getAdmin') }}" class="nav">Admin</a>
+			{% endif %}
+
+			<a href="{{ path('getLogout') }}" class="nav">Logout<a/>
+		{% else %}
+
+			{% for error in app.session.flashbag.get('loginError') %}
+				<p>{{ error }}</p>
+			{% endfor %}
+
+			<form action="{{ path('postLogin') }}" method="post" class="signIn">
+				<label for="login">Login :</label>
+				<input type="text" name="login" id="login"/>
+
+				<label for="password">Password :</label>
+				<input type="text" name="password" id="password"/>
+
+				<input type="submit" value="Login" class="loginButton" />
+			</form>
+		{% endif %}
+	</aside>
+	
+	<footer>{% block footer %}{% endblock %}</footer>
+
+	{% block javascript %}
+		<script type="text/javascript">
+		var monjsdebase;
+		</script>
+	{% endblock %}
+</body>
+</html>
