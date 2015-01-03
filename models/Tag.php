@@ -4,54 +4,54 @@ namespace MVC;
 class Tag
 {
 	/**
-	 * Ajout d'un tag dans la BDD.
+	 * Add a tag in the DB.
 	 * 
-	 * @param  string  $newTag  Le tag à ajouter
+	 * @param  string  $newTag  Tag to add
 	 * @return array
 	 */
 	public function add($newTag)
 	{
-		// Je récupère mon instance singleton de la class Sql.
+		// Getting singleton instance from the SQL class
 		$sql = Sql::getInstance();
 
-		// Création de la requête.
+		// Request creation
 		$sqlQuery = 'INSERT INTO tag(name)
 					 VALUES (:name)';
 
-		// Préparation de la requête, pdo renvoi un objet PDOStatement
-		// qui exécutera la requête et contiendra les résultats.
+		// Preparating the request, pdo returns an object PDOStatement
+		// which will execute the request and contain the results
 		$statement = $sql->pdo->prepare($sqlQuery);
 
-		// Initialisation des paramètres de la requête.
-		// Exécution de la requête sur le serveur mySQL.
+		// Initialising request parameters
+		// Executing request on the mySQL server
 		$statement->execute(array(':name' => $newTag));
 
-		// Je return le nombre de lignes affectées par la requête dans la table SQL (normalement 1 dans ce cas).
+		// Returning the number of ligns affected by the request in the SQL table (1 in this case)
 		return $statement->rowCount();
 	}
 
 	/**
-	 * Renvoi tous les tags.
+	 * Return all the tags.
 	 * 
 	 * @return array
 	 */
 	public function getAll()
 	{
-		// Je récupère mon instance singleton de la class Sql
+		// Getting singleton instance from the SQL class
 		$sql = Sql::getInstance();
 
-		// Création de la requête
+		// Request creation
 		$sqlQuery = 'SELECT t.name as tagName
 					 FROM tag t';
 
-		// Préparation de la requête, pdo renvoi un objet PDOStatement
-		// qui exécutera la requête et contiendra les résultats
+		// Preparating the request, pdo returns an object PDOStatement
+		// which will execute the request and contain the results
 		$statement = $sql->pdo->prepare($sqlQuery);
 
-		// Exécution de la requête sur le serveur mysql
+		// Executing request on the mySQL server
 		$statement->execute();
 
-		// Récupération des résultats
+		// Fetching results
 		/*var_dump($statement->fetchAll());die();*/
 		$results = $statement->fetchAll();
 
@@ -59,31 +59,29 @@ class Tag
 	}
 
 	/**
-	 * Renvoi un article.
+	 * Return an article.
 	 * 
-	 * @param  integer $id  identifiant de l'article
+	 * @param  integer $id  id of the article
 	 * @return array
 	 */
 	public function get($id)
 	{
-		// Je récupère mon instance singleton de la class Sql
+		// Getting singleton instance from the SQL class
 		$sql = Sql::getInstance();
 
-		// Création de la requête
-		// Les paramètres de la requête sont sous la forme :variable
-		// et seront initialisés dans la méthode execute();
+		// Request creation
 		$sqlQuery = 'SELECT * FROM article WHERE article.id = :id';
 
-		// Préparation de la requête, pdo renvoi un objet PDOStatement
-		// qui exécutera la requête et contiendra les résultats
+		// Preparating the request, pdo returns an object PDOStatement
+		// which will execute the request and contain the results
 		$statement = $sql->pdo->prepare($sqlQuery);
 
-		// Exécution de la requête sur le serveur mysql
-		// Initialisation des paramètres de la requête
-		// La valeur de la clé :id correspond au :id dans la requête sql
+		// Executing request on the mySQL server
+		// Initialising request parameters
+		// The value of the key :id corresponds to :id in the SQL request
 		$statement->execute(array(':id' => $id));
 
-		// Récupération des résultats
+		// Fetching results
 		$all = $statement->fetch();
 		/*var_dump($all);*/
 		return $all;
