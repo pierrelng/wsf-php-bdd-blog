@@ -149,7 +149,7 @@ class AdminController extends Controller
 	 */
 	public function getAdminTag(Request $request, Application $app)
 	{
-		// Initialising the table named datas (contains infos on the logged in user)
+		// Initialising the table named datas with the infos on the logged in user
 		$this->initAction($app);
 
 		// Calling Twig to render HTML of Tag page
