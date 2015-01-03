@@ -10,13 +10,13 @@ class HomeController extends Controller
 	{
 		$this->initAction($app);
 
-		//initialise le model Article
+		// Initialising Article model
 		$article = new Article();
 
-		//Je mets dans datas['articles'] tous mes articles
+		// Inserting in datas['articles'] all my articles
 		$this->datas['articles'] = $article->getAll();
 
-		//Appel de twig, pour générer le rendu html
+		// Calling twig to render HTML
 		return $app['twig']->render('home/index.twig', $this->datas);
 	}
 
@@ -24,15 +24,15 @@ class HomeController extends Controller
 	{
 		$this->initAction($app);
 		
-		//initialise le model Article
+		// Initialising Article model
 		$article = new Article();
 		$comment = new Comment();
 
-		//Recupère un article
+		// Fetching an article
 		$this->datas['article'] = $article->get($id);
 		$this->datas['comments'] = $comment->getByArticle($id);
 
-		//Appel de twig, pour générer le rendu html
+		// Calling twig to render HTML
 		return $app['twig']->render('home/article.twig', $this->datas);
 
 	}
@@ -47,7 +47,7 @@ class HomeController extends Controller
 		/*var_dump($body); die;*/
 
 		if (!empty($body)) {
-			// Ajout d'un comment dans la BDD
+			// Adding a comment in DB
 			$comment = new Comment();
 			$nb = $comment->add($body, $articleId, $userId);
 
@@ -72,7 +72,7 @@ class HomeController extends Controller
 
 		$commentId = $idCommentFetchedFromRoute;
 
-		// Suppression d'un comment dans la BDD
+		// Deleting a comment in DB
 		$comment = new Comment();
 		$comment->delete($commentId);
 		
