@@ -171,7 +171,7 @@ class AdminController extends Controller
 		$newTag = $request->request->get('tag');
 		/*var_dump($newTag); die();*/
 
-		// If $newTag not null, then...
+		// If $newTag not empty, then...
 		if (!empty($newTag)) {
 
 			// ...instantiate the Tag class
@@ -181,7 +181,7 @@ class AdminController extends Controller
 			// and store in $nb the number of lines affected in the SQL table
 			$nb = $tag->add($newTag);
 
-			// If $nb isn't null, then the value has been inserted in the table and I display the success flashbag
+			// If $nb isn't empty, then the value has been inserted in the table and I display the success flashbag
 			// Otherwise, no lines has been affected in the SQL table, so the value has not been inserted in the table
 			// and I display the error flashbag.
 			if ($nb) {
