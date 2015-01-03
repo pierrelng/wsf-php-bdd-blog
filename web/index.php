@@ -1,32 +1,33 @@
 <?php 
 
-//Chargement de l'auto loader
+// Autoloader load
 require_once __DIR__.'/../vendor/autoload.php';
 
-// Creation de l'instance Silex
+// Silex instance creation
 $app = new Silex\Application();
 
-//Activation du mode debug
+// Debug mode activation
 $app['debug'] = true;
 
-//Configuration de twig
+// Twig configuration
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-	//twig trouvera les fichiers templates dans le dossier views
+	// twig will find the template files in the folder views
 	'twig.path' => __DIR__.'/../views',
 ));
 
-//Configuration du service URL Generator
+// URL Generator service configuration
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
-//Configuration du service session
+// Session service configuration
 $app->register(new Silex\Provider\SessionServiceProvider());
 
-//Validator service 
+// Validator service
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 
 
-
-//Routes
+/**
+ * Routes
+ */
 $app->get('/', 'MVC\\HomeController::index')
 	->bind('home');
 
@@ -43,7 +44,7 @@ $app->get('/logout', 'MVC\\UserController::getLogout')
 	->bind('getLogout');
 
 /**
- * Routes Admin
+ * Admin Routes
  */
 $app->get('/admin', 'MVC\\AdminController::getAdminDashboard')
 	->bind('getAdmin');
@@ -63,11 +64,11 @@ $app->post('/admin/user', 'MVC\\AdminController::postAdminUser')
 $app->get('/delete/comment/{idCommentFetchedFromRoute}', 'MVC\\HomeController::getDeleteComment')
 	->bind('getDeleteComment');
 
-// Lorsque cette route est appelée, j'appelle la méthode getAdminTag de l'AdminController.
+// When this route is called, I call the method getAdminTag of AdminController.
 $app->get('/admin/tag', 'MVC\\AdminController::getAdminTag')
 	->bind('getAdminTag');
 
-// Lorsque cette route est appelée, j'appelle la méthode postAdminTag de l'AdminController.
+// When this route is called, I call the method postAdminTag of AdminController.
 $app->post('/admin/tag', 'MVC\\AdminController::postAdminTag')
 	->bind('postAdminTag');
 
