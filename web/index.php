@@ -64,11 +64,11 @@ $app->post('/admin/user', 'MVC\\AdminController::postAdminUser')
 $app->get('/delete/comment/{idCommentFetchedFromRoute}', 'MVC\\HomeController::getDeleteComment')
 	->bind('getDeleteComment');
 
-// When this route is called, I call the method getAdminTag of AdminController.
+// When this route is called, execute the method getAdminTag of AdminController.
 $app->get('/admin/tag', 'MVC\\AdminController::getAdminTag')
 	->bind('getAdminTag');
 
-// When this route is called, I call the method postAdminTag of AdminController.
+// When this route is called, execute the method postAdminTag of AdminController.
 $app->post('/admin/tag', 'MVC\\AdminController::postAdminTag')
 	->bind('postAdminTag');
 
