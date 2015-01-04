@@ -98,6 +98,7 @@ class Article
 			':body' => $body
 		));
 
+		// Fetching the id of the article freshly created
 		$lastId = $sql->pdo->lastInsertId();
 		//$lastId = mysql_insert_id();
 		// http://stackoverflow.com/questions/1685860/how-do-i-get-the-last-inserted-id-of-a-mysql-table-in-php
@@ -105,30 +106,32 @@ class Article
 		// http://stackoverflow.com/questions/2675766/pdo-lastinsertid-issues-php
 		
 		/*var_dump($lastId);die();*/
-					
+		
 		return array($statement->rowCount(), $lastId);
 	}
 
 	/**
 	 * Associate an article
-	 * with the selected tags.
+	 * with the selected tags in DB.
 	 * 
 	 * @param array  $tagsId  ids of selected tags during article creation
 	 */
-	public function addToPivot($tagsId, $articleId)
+	public function addToPivot($article_tag)
 	{
 		$sql = Sql::getInstance();
 
 		$sqlQuery = 'INSERT INTO article_tag(id_article, id_tag)
-					 VALUES (:articleId, :tagsId)';
+					 VALUES (:id_article, :id_tag)';
 
 		$statement = $sql->pdo->prepare($sqlQuery);
 
-		$statement->execute(array(
-			':tagsId' => $tagsId,
-			':articleId' => $articleId,
-		));
+		foreach ($article_tag as $row) { // http://www.webdeveloper.com/forum/showthread.php?290165-Insert-Multidimensional-array-into-Mysql-Database
+			$statement->execute(array(
+				':id_article' => $row[0],
+				':id_tag' => $row[1]
+			));
+		}
 
-		return ;
+		return $statement->rowCount();
 	}
 }
