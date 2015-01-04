@@ -39,9 +39,9 @@ class AdminController extends Controller
 
 		$title = $request->request->get('title');
 		$body = $request->request->get('body');
+
 		// Fetching the tags selected for the article
 		$tagsId = $request->request->get('tagsSelected');
-
 		/*var_dump($title);
 		var_dump($body);
 		var_dump($tagsId);
@@ -51,12 +51,17 @@ class AdminController extends Controller
 			// Adding an article in DB
 			$article = new Article();
 			$nb = $article->add($title, $body);
-			/*var_dump($nb); die();*/
+			/*var_dump($nb); die();*/			
 
-			// Adding the tags to article_tag in SQL
+			// Binding each tag with current article id
 			$articleId = $nb[1];
-			var_dump($articleId); die();
-			$nb2 = $article->addToPivot($tagsId);
+			foreach ($tagsId as $value) { // http://php.net/manual/en/control-structures.foreach.php
+					$article_tag[] = array($articleId, $value);
+			}
+			/*var_dump($article_tag);die();*/
+
+			// Adding the tags to the table named article_tag in DB
+			$nb2 = $article->addToPivot($article_tag);
 
 			if ($nb[0]) {
 				$app['session']->getFlashBag()->add('success', 'Article added');
@@ -65,12 +70,12 @@ class AdminController extends Controller
 				$app['session']->getFlashBag()->add('error', 'Article not added');
 			}
 
-			// if ($nb[1]) {
-			// 	$app['session']->getFlashBag()->add('success', 'Tags associated');
-			// }
-			// else {
-			// 	$app['session']->getFlashBag()->add('error', 'Tags not associated');
-			// }
+			if ($nb2) {
+				$app['session']->getFlashBag()->add('success', 'Tags associated');
+			}
+			else {
+				$app['session']->getFlashBag()->add('error', 'Tags not associated');
+			}
 		}
 		else {
 			$app['session']->getFlashBag()->add('error', 'Title or body empty');
