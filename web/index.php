@@ -31,6 +31,9 @@ $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app->get('/', 'MVC\\HomeController::index')
 	->bind('home');
 
+$app->get('/{searchedTag}', 'MVC\\HomeController::indexByTag')
+	->bind('indexByTag');
+
 $app->get('/article/{id}', 'MVC\\HomeController::getArticle')
 	->bind('getArticle');
 

@@ -16,7 +16,7 @@
 		<ul>
 			{% for tag in article.tags %}
 				{% if tag %}
-					<li>{{tag}}</li>
+					<li><a href="{{ path('indexByTag', {searchedTag: tag}) }}">{{tag}}</a></li>
 				{% endif %}
 			{% endfor %}
 		</ul>

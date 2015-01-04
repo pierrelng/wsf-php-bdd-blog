@@ -44,6 +44,64 @@ class Article
 					'title' => $row['title'],
 					'body' => $row['body'],
 					'tags' => array(
+						$row['tagName'],
+					)
+				);
+			}
+			else {
+				$result[$row['id']]['tags'][] = $row['tagName'];
+			}
+		}
+
+		/*var_dump($result);die();*/
+		return $result;
+	}
+
+	/**
+	 * Get articles by a specific tag.
+	 * 
+	 * @param  $searchedTag
+	 * @return array
+	 */
+	public function getByTag($searchedTag)
+	{
+		/*var_dump($searchedTag);die();*/
+
+		// Getting singleton instance from the SQL class
+		$sql = Sql::getInstance();
+
+		// Request creation
+		$sqlQuery = 'SELECT
+						a.id,
+						a.title,
+						a.body,
+						t.name as tagName
+					 FROM article a
+					 LEFT JOIN article_tag at
+					 	ON a.id = at.id_article
+					 LEFT JOIN tag t
+					 	ON t.id = at.id_tag
+					 WHERE t.name = :searchedTag';
+
+		// Preparating the request, pdo returns an object PDOStatement
+		// which will execute the request and contain the results
+		$statement = $sql->pdo->prepare($sqlQuery);
+
+		// Executing request on the mySQL server
+		$statement->execute(array(':searchedTag' => $searchedTag));
+
+		// Fetching results
+		/*var_dump($statement->fetchAll());die();*/
+		$datas = $statement->fetchAll();
+		
+		$result = array();
+		foreach ($datas as $row) {
+			if (empty($result[$row['id']])) {
+				$result[$row['id']] = array(
+					'id' => $row['id'],
+					'title' => $row['title'],
+					'body' => $row['body'],
+					'tags' => array(
 						$row['tagName']
 					)
 				);

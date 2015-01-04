@@ -20,6 +20,28 @@ class HomeController extends Controller
 		return $app['twig']->render('home/index.twig', $this->datas);
 	}
 
+	/**
+	 * Filter index by a specific tag.
+	 * 
+	 * @param  Request     $request 
+	 * @param  Application $app     
+	 */
+	public function indexByTag(Request $request, Application $app, $searchedTag)
+	{
+		/*var_dump($searchedTag);die();*/
+
+		$this->initAction($app);
+
+		// Initialising Article model
+		$article = new Article();
+
+		// Inserting in datas['articles'] all the articles containing the searched tag
+		$this->datas['articles'] = $article->getByTag($searchedTag);
+
+		// Calling twig to render HTML
+		return $app['twig']->render('home/index.twig', $this->datas);
+	}
+
 	public function getArticle(Request $request, Application $app, $id)
 	{
 		$this->initAction($app);
