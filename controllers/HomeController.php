@@ -50,13 +50,9 @@ class HomeController extends Controller
 		$article = new Article();
 		$comment = new Comment();
 		
-		// // Inserting in datas['articles'] all my articles
-		// $this->datas['articles'] = $article->getAll();
-
 		// Fetching an article
 		$this->datas['article'] = $article->get($id);
 		$this->datas['comments'] = $comment->getByArticle($id);
-
 
 		// Calling twig to render HTML
 		return $app['twig']->render('home/article.twig', $this->datas);

@@ -35,7 +35,8 @@ class Article
 		// Fetching results
 		/*var_dump($statement->fetchAll());die();*/
 		$datas = $statement->fetchAll();
-		
+
+		// Creating a nicely organized array containing the results
 		$result = array();
 		foreach ($datas as $row) {
 			if (empty($result[$row['id']])) {
@@ -81,7 +82,8 @@ class Article
 					 	ON a.id = at.id_article
 					 LEFT JOIN tag t
 					 	ON t.id = at.id_tag
-					 WHERE t.name = :searchedTag';
+
+					 WHERE t.name = :searchedTag'; // Point of interest #1
 
 		// Preparating the request, pdo returns an object PDOStatement
 		// which will execute the request and contain the results
@@ -94,6 +96,7 @@ class Article
 		/*var_dump($statement->fetchAll());die();*/
 		$datas = $statement->fetchAll();
 		
+		// Creating a nicely organized array containing the results
 		$result = array();
 		foreach ($datas as $row) {
 			if (empty($result[$row['id']])) {
@@ -125,15 +128,45 @@ class Article
 	{
 		$sql = Sql::getInstance();
 
-		$sqlQuery = 'SELECT * FROM article WHERE article.id = :id';
+		$sqlQuery = 'SELECT
+						a.id,
+						a.title,
+						a.body,
+						t.name as tagName
+					 FROM article a
+					 LEFT JOIN article_tag at
+					 	ON a.id = at.id_article
+					 LEFT JOIN tag t
+					 	ON t.id = at.id_tag
+
+					 WHERE a.id = :id'; // Point of interest #2
 
 		$statement = $sql->pdo->prepare($sqlQuery);
 
 		$statement->execute(array(':id' => $id));
 
-		$all = $statement->fetch();
-		/*var_dump($all);*/
-		return $all;
+		// Fetching results
+		$datas = $statement->fetchAll();
+
+		$singleArticle = array();
+		// Creating a nicely organized array containing the results FOR ONE ARTICLE
+			foreach ($datas as $row) {
+				if (empty($singleArticle['id'])) {
+					$singleArticle = array(
+						'id' => $row['id'],
+						'title' => $row['title'],
+						'body' => $row['body'],
+						'tags' => array(
+							$row['tagName']
+						)
+					);
+				}
+				else {
+					$singleArticle['tags'][] = $row['tagName'];
+				}
+			}
+		/*var_dump($result);die();*/
+		return $singleArticle;
 	}
 
 	/**
