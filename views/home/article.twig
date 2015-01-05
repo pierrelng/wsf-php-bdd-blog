@@ -23,7 +23,7 @@
     		<article>
 		        <h3 class="commentor">{{comment.login|e}}</h3>
 
-		        <p class="commentor">
+		        <p class="timestamp">
 		        	{{comment.create_at|date("d F Y à H:i")}} {# http://twig.sensiolabs.org/doc/filters/date.html#date #}
 					{% if isAdmin is defined and isAdmin %}
 						<a href="{{ path('getDeleteComment', {idCommentFetchedFromRoute: comment.id}) }}">Delete</a>

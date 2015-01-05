@@ -45,8 +45,15 @@ input[type="submit"]:not(.loginButton) {
 	margin-bottom: .5em;
 }
 
-.commentor {
+.commentor, .timestamp {
 	margin: .2em 0 .2em 0;
+}
+
+.timestamp {
+	display: inline-block;
+	padding: 0 3px;
+	font-size: .8em;
+	background-color: #E1DFFF;
 }
 
 .comment {
