@@ -4,8 +4,6 @@
 
 {% block content %}
 
-{# 	{% for id, article in article %}
- #}
 	<article>
 		<h2 class="article">{{article.title|e}}</h2>
 		<p>{{article.body|e}}</p>
@@ -17,8 +15,7 @@
 				{% endif %}
 			{% endfor %}
 		</ul>
-{# 	{% endfor %}
- #}	
+
 		<section>
 			<h2>Commentaires :</h2>
 			
@@ -33,7 +30,7 @@
 					{% endif %}
 		        </p>
 
-		        <p class="comment">{{comment.body|e|url_encode}}</p>
+		        <p class="comment">{{comment.body|e}}</p>
 		    </article>  
 		    {% endfor %}
 			

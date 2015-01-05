@@ -52,8 +52,23 @@ class HomeController extends Controller
 		
 		// Fetching an article
 		$this->datas['article'] = $article->get($id);
+
+		// Fetching comments associated
 		$this->datas['comments'] = $comment->getByArticle($id);
 
+		// Tried to convert URLs in comments into hyperlinks. Unsuccessful.
+			// $text = $comment->getByArticle($id);
+
+			// 	// Converting URLs in text to hyper links
+			// 	// http://stackoverflow.com/questions/5531502/how-do-i-auto-convert-an-url-into-a-hyper-link-in-php
+			// 	// http://stackoverflow.com/questions/15472033/how-to-update-specific-keys-value-in-an-associative-array-in-php
+			// 	foreach($text as $key => $value) {
+			// 		$text[$key]['body'] = preg_replace("#http://([\S]+?)#Uis", '<a rel="nofollow" href="http://\\1">\\1</a>', $value['body']);
+			// 	}
+			// 	/*var_dump($text); die;*/
+
+			// $this->datas['comments'] = $text;
+		
 		// Calling twig to render HTML
 		return $app['twig']->render('home/article.twig', $this->datas);
 
