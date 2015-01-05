@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2015 at 07:31 PM
+-- Generation Time: Jan 05, 2015 at 11:53 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -30,16 +30,16 @@ CREATE TABLE IF NOT EXISTS `article` (
 `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `body` text NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=73 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=75 ;
 
 --
 -- Dumping data for table `article`
 --
 
 INSERT INTO `article` (`id`, `title`, `body`) VALUES
-(1, 'Article num1', 'Corpus de l''article'),
-(2, 'Article num2', 'Corpus de l''article'),
-(72, 'Article num3', 'Corpus de l''article');
+(1, 'Article #1', 'Corpus de l''article'),
+(2, 'Article #2', 'Corpus de l''article'),
+(72, 'Article #3', 'Corpus de l''article');
 
 -- --------------------------------------------------------
 
@@ -77,17 +77,16 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `id_article` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `create_at` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=39 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
 
 --
 -- Dumping data for table `comment`
 --
 
 INSERT INTO `comment` (`id`, `body`, `id_article`, `id_user`, `create_at`) VALUES
-(19, 'qwerty', 1, 9, '2014-12-03 10:33:57'),
-(33, 'azrgarg', 2, 11, '2014-12-03 15:41:42'),
-(36, 'azertyazret aÃ¹lkjrmdl dlkghz reg', 1, 11, '2014-12-04 14:46:01'),
-(38, 'fyujty ry ujyu jyr ujt jtytyhetjrr heetyh teyh', 2, 11, '2014-12-04 20:25:05');
+(39, 'What a wonderful article.', 1, 12, '2015-01-05 21:21:09'),
+(40, 'Do not go here : http://bit.ly/1cmjjtG', 2, 12, '2015-01-05 21:23:18'),
+(42, 'Y U DO DIS !', 2, 11, '2015-01-05 23:29:36');
 
 -- --------------------------------------------------------
 
@@ -98,7 +97,7 @@ INSERT INTO `comment` (`id`, `body`, `id_article`, `id_user`, `create_at`) VALUE
 CREATE TABLE IF NOT EXISTS `tag` (
 `id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `tag`
@@ -124,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `admin` tinyint(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `user`
@@ -134,7 +133,8 @@ INSERT INTO `user` (`id`, `login`, `password`, `admin`) VALUES
 (1, 'user1', 'user1', 0),
 (2, 'admin', 'admin', 1),
 (9, 'hash@gmail.com', '$2y$10$OmYuB8WhtIiE9IXkFKw9bOkoonqupER4n5THJUoJ64RIXhvWXpTNu', 0),
-(11, 'admin@admin.com', '$2y$10$YrBY8QpR7SA9XCwiIwdHE.5EdibYrBDrtfvJXgSUKJoVAWNjcHTmO', 1);
+(11, 'admin@admin.com', '$2y$10$YrBY8QpR7SA9XCwiIwdHE.5EdibYrBDrtfvJXgSUKJoVAWNjcHTmO', 1),
+(12, 'user@user.com', '$2y$10$hk4nvmuQ3EyCgP0eI2eIzu2WTlU4nQ57sxCQceFrF7go6EFW3kUOC', 0);
 
 --
 -- Indexes for dumped tables
@@ -178,22 +178,22 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `article`
 --
 ALTER TABLE `article`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=73;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=75;
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT for table `tag`
 --
 ALTER TABLE `tag`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- Constraints for dumped tables
 --
